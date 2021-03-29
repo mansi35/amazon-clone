@@ -17,7 +17,9 @@ function CheckoutProduct({productId, title, price, image, rating, setLength, set
                 })
                 setLength(data.noItems - 1);
                 setTotal(data.subtotal - price);
-                console.log(data.noItems - 1, data.subtotal - price);
+                if (data.noItems - 1 === 0) {
+                    setTotal(0);
+                }
             })
         }).catch((error) => {
             console.error("Error removing item: ", error);
