@@ -12,11 +12,13 @@ function Checkout() {
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
-        db.collection("users").doc(currentUser.uid).get().then(docc => {
-            const data = docc.data();
-            setTotal(data.subtotal);
-            setLength(data.noItems);
-        })
+        if (currentUser) {
+            db.collection("users").doc(currentUser.uid).get().then(docc => {
+                const data = docc.data();
+                setTotal(data.subtotal);
+                setLength(data.noItems);
+            })
+        }
     })
     
 

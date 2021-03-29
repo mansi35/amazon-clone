@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../Home.css";
 import Product from "./Product";
 import {useAuth} from '../contexts/AuthContext';
 import Header from "./Header";
+import db from '../firebase';
 
 function Home() {
     const {currentUser} = useAuth();
     const [length, setLength] = useState(0);
+
+    useEffect(() => {
+        if (currentUser) {
+            db.collection("users").doc(currentUser.uid).get().then(docc => {
+                const data = docc.data();
+                setLength(data.noItems);
+            })
+        }
+    })
+
     return (
         <div>
         <Header length={length} />
